@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { PostInfoSensor } from './infoSensorDTO/post-infoSensor.dto';
 
 @Controller('freezer')
@@ -10,7 +10,7 @@ export class InfoSensorController {
   }
   
   @Post()
-  async patchData(@Body() body: PostInfoSensor) {
+  async postData(@Body() body: PostInfoSensor) {
     return {body};
   }
 }
