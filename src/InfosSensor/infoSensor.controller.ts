@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PostInfoSensor } from './infoSensorDTO/post-infoSensor.dto';
 import { InfoSensorService } from './infoSensor.service';
 
@@ -10,6 +10,11 @@ export class InfoSensorController {
   @Get()
   async getAll() {
     return this.infoSensorService.getAll();
+  }
+
+  @Get(':id')
+  async getById(@Param('id') id) {
+    return this.infoSensorService.getById(id);
   }
   
   @Post()

@@ -21,4 +21,12 @@ export class InfoSensorService {
   async getAll() {
     return this.prisma.freezerApi.findMany();
   }
+
+  async getById(id: number) {
+    return this.prisma.freezerApi.findMany({
+      where: {
+        cliente_id: Number(id)
+      }
+    });
+  }
 }
