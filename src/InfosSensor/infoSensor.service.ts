@@ -17,4 +17,8 @@ export class InfoSensorService {
       },
     });
   }
+
+  async getAll() {
+    return this.prisma.freezerApi.findMany();
+  }
 }

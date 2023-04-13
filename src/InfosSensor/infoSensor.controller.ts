@@ -9,7 +9,7 @@ export class InfoSensorController {
 
   @Get()
   async getAll() {
-    return 'Get All';
+    return this.infoSensorService.getAll();
   }
   
   @Post()
