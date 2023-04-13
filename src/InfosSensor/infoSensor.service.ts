@@ -1,18 +1,20 @@
 import { Injectable } from "@nestjs/common";
 import { PostInfoSensor } from "./infoSensorDTO/post-infoSensor.dto";
-import { Repository } from "typeorm";
-import { InfoSensorEntity } from "./entity/infoSensor.entity";
-import { InjectRepository } from "@nestjs/typeorm";
+import { InfoSensorPrismaService } from "src/InfoSensorPrisma/infoSensor.prisma.service";
 
 @Injectable()
 export class InfoSensorService {
 
-  constructor(
-    @InjectRepository(InfoSensorEntity)
-    private infoSensorRepository: Repository<InfoSensorEntity>
-  ) {}
+  constructor(private readonly prisma: InfoSensorPrismaService) {}
 
-    async postData(data: PostInfoSensor) {
-      return this.infoSensorRepository.create(data)
-    }
+  async postData({cliente_id, freezer_id, status_porta, temp_atual}: PostInfoSensor) {
+    return this.prisma.freezerApi.create({
+      data: {
+        cliente_id,
+        freezer_id,
+        temp_atual,
+        status_porta,
+      },
+    });
+  }
 }

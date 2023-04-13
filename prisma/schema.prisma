@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model FreezerApi {
+  id           Int      @id @default(autoincrement())
+  cliente_id   Int
+  freezer_id   Int
+  temp_atual   Decimal  @db.Decimal(10, 0)
+  status_porta String   @db.VarChar(45)
+  createdAt    DateTime @default(now()) @db.Timestamp(0)
+
+  @@map("freezerapi")
+}

@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { InfoSensorController } from './infoSensor.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { InfoSensorEntity } from './entity/infoSensor.entity';
+import { InfoSensorService } from './infoSensor.service';
+import { InfoSensorPrismaModule } from 'src/InfoSensorPrisma/infoSensor.prisma.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([InfoSensorEntity])],
+    imports: [InfoSensorPrismaModule],
     controllers: [InfoSensorController],
-    providers: [],
-    exports: [TypeOrmModule],
+    providers: [InfoSensorService],
+    exports: [InfoSensorService],
 })
 
 export class InfoSensorModule {}
