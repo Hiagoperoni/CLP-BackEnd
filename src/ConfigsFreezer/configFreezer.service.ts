@@ -7,6 +7,11 @@ import ConfigFreezerWhereUniqueInput from "./configFreezerDTO/types";
 export class ConfigFreezerService {
   constructor (private readonly prisma: ConfigFreezerPrismaService) {}
 
+  async getAll(clienteId: number) {
+    const where: ConfigFreezerWhereUniqueInput = { cliente_id: Number(clienteId) };
+    return this.prisma.configFreezer.findMany({ where });
+  }
+
   async patchData(freezerId: number, data: PatchConfigFreezerDTO) {
     const where: ConfigFreezerWhereUniqueInput = { freezer_id: Number(freezerId) };
     return this.prisma.configFreezer.update({

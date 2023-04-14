@@ -15,6 +15,7 @@ model FreezerApi {
   status_porta String   @db.VarChar(45)
   createdAt    DateTime @default(now()) @db.Timestamp(0)
 
+  @@index([cliente_id], map: "cliente_id_idx")
   @@map("freezerapi")
 }
 
@@ -28,6 +29,17 @@ model ConfigFreezer {
   porta_tempo        Int
   createdAt          DateTime? @default(now()) @db.Timestamp(0)
   updatedAt          DateTime? @default(now()) @db.Timestamp(0)
+  users              Users     @relation(fields: [cliente_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "cliente_id")
 
+  @@index([cliente_id], map: "cliente_id_idx")
   @@map("configfreezer")
+}
+
+model Users {
+  id            Int             @id @default(autoincrement())
+  email         String          @db.VarChar(127)
+  password      String          @db.VarChar(127)
+  configfreezer ConfigFreezer[]
+
+  @@map("users")
 }
