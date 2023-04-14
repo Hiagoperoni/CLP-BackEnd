@@ -17,3 +17,17 @@ model FreezerApi {
 
   @@map("freezerapi")
 }
+
+model ConfigFreezer {
+  id                 Int       @id @default(autoincrement())
+  cliente_id         Int
+  freezer_id         Int
+  temp_padrao        Decimal   @db.Decimal(10, 0)
+  temp_margem_frio   Decimal   @db.Decimal(10, 0)
+  temp_margem_quente Decimal   @db.Decimal(10, 0)
+  porta_tempo        Int
+  createdAt          DateTime? @default(now()) @db.Timestamp(0)
+  updatedAt          DateTime? @default(now()) @db.Timestamp(0)
+
+  @@map("configfreezer")
+}

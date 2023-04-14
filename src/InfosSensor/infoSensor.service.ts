@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PostInfoSensor } from "./infoSensorDTO/post-infoSensor.dto";
-import { InfoSensorPrismaService } from "src/InfoSensorPrisma/infoSensor.prisma.service";
+import { InfoSensorPrismaService } from "src/InfosSensor/InfoSensorPrisma/infoSensor.prisma.service";
 
 @Injectable()
 export class InfoSensorService {

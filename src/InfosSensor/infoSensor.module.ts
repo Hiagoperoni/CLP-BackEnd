@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { InfoSensorController } from './infoSensor.controller';
 import { InfoSensorService } from './infoSensor.service';
-import { InfoSensorPrismaModule } from 'src/InfoSensorPrisma/infoSensor.prisma.module';
+import { InfoSensorPrismaModule } from 'src/InfosSensor/InfoSensorPrisma/infoSensor.prisma.module';
 
 @Module({
     imports: [InfoSensorPrismaModule],
