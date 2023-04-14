@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigFreezerPrismaService } from "src/ConfigsFreezer/configFreezerPrisma/configFreezer.prisma.service";
 import { PatchConfigFreezerDTO } from "./configFreezerDTO/patch-configFreezer.dto";
-import ConfigFreezerWhereUniqueInput from "./configFreezerDTO/types";
+import ConfigFreezerWhereUniqueInput from "./configFreezerDTO/typesFreezer";
 
 @Injectable()
 export class ConfigFreezerService {
