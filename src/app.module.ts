@@ -3,10 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { InfoSensorModule } from './InfosSensor/infoSensor.module';
 import { ConfigFreezerModule } from './ConfigsFreezer/configFreezer.module';
-import { UsersService } from './Users/users.service';
+import { UsersModule } from './Users/users.module';
 
 @Module({
-  imports: [InfoSensorModule, ConfigFreezerModule, UsersService],
+  imports: [InfoSensorModule, ConfigFreezerModule, UsersModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

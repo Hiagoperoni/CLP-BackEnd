@@ -29,16 +29,17 @@ model ConfigFreezer {
   porta_tempo        Int
   createdAt          DateTime? @default(now()) @db.Timestamp(0)
   updatedAt          DateTime? @default(now()) @db.Timestamp(0)
-  users              Users     @relation(fields: [cliente_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "cliente_id")
+  users              Users     @relation(fields: [cliente_id], references: [cliente_id], onDelete: NoAction, onUpdate: NoAction, map: "cliente_id")
 
   @@index([cliente_id], map: "cliente_id_idx")
   @@map("configfreezer")
 }
 
 model Users {
-  id            Int             @id @default(autoincrement())
+  cliente_id    Int             @id @default(autoincrement())
   email         String          @db.VarChar(127)
   password      String          @db.VarChar(127)
+  isAvailable   Int?            @default(1) @db.TinyInt
   configfreezer ConfigFreezer[]
 
   @@map("users")
