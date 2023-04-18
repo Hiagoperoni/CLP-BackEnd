@@ -13,9 +13,9 @@ export class ConfigFreezerController {
       return this.configFreezerService.getAll(id);
     }
   
-  @Patch(':id')
-    async patchData(@Param('id') id: number, @Body() data: PatchConfigFreezerDTO) {
-      return this.configFreezerService.patchData(id, data);
+    @Patch()
+    async updateConfigFreezer(@Body() data: PatchConfigFreezerDTO) {
+      return this.configFreezerService.patchData(data);
     }
   
   @Post()
