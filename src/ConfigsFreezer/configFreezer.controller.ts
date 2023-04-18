@@ -13,7 +13,7 @@ export class ConfigFreezerController {
       return this.configFreezerService.getAll(id);
     }
   
-    @Patch()
+  @Patch()
     async updateConfigFreezer(@Body() data: PatchConfigFreezerDTO) {
       return this.configFreezerService.patchData(data);
     }
