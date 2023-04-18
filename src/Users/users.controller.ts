@@ -12,7 +12,7 @@ export class UsersController {
     return this.usersService.getAll();
   }
 
-  @Get('id')
+  @Get(':id')
   async getById(@Param('id') id: number) {
     return this.usersService.getById(id);
   }

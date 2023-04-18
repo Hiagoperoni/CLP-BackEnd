@@ -22,7 +22,9 @@ export class ConfigFreezerService {
   }
 
   async postData({cliente_id, freezer_id, porta_tempo, temp_margem_frio, temp_margem_quente, temp_padrao}: PostConfigFreezerDTO) {
-    const data = {cliente_id, freezer_id, porta_tempo, temp_margem_frio, temp_margem_quente, temp_padrao};
+    const data = {
+      data: {cliente_id, freezer_id, porta_tempo, temp_margem_frio, temp_margem_quente, temp_padrao}
+    };
     return this.prisma.configFreezer.create(data);
   }
 
