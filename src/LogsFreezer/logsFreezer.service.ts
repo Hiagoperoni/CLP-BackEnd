@@ -32,6 +32,7 @@ export class LogsFreezerService {
           Erro: errorReported,
         }
       });
+
     }
     return this.prisma.logsFreezer.create({
       data: {
@@ -47,4 +48,17 @@ export class LogsFreezerService {
       }
     });
   }
+
+//  async getAll() {
+//    return this.prisma.logsFreezer.findMany();
+//  }
+
+  async getByCliente(id: number) {
+    return this.prisma.logsFreezer.findMany({
+      where: {
+        cliente_id: id,
+      }
+    });
+  }
+
 }
