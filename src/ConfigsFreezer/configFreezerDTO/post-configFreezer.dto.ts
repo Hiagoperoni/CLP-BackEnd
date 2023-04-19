@@ -12,10 +12,10 @@ export class PostConfigFreezerDTO {
     temp_padrao: number;
 
     @IsNumber()
-    temp_margem_frio: number;
+    temp_min: number;
 
     @IsNumber()
-    temp_margem_quente: number;
+    temp_max: number;
 
     @IsNumber()
     porta_tempo: number;

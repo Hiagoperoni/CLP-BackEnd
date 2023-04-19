@@ -20,16 +20,16 @@ model FreezerApi {
 }
 
 model ConfigFreezer {
-  id                 Int       @id @default(autoincrement())
-  cliente_id         Int
-  freezer_id         Int
-  temp_padrao        Decimal   @db.Decimal(10, 0)
-  temp_margem_frio   Decimal   @db.Decimal(10, 0)
-  temp_margem_quente Decimal   @db.Decimal(10, 0)
-  porta_tempo        Int
-  createdAt          DateTime? @default(now()) @db.Timestamp(0)
-  updatedAt          DateTime? @default(now()) @db.Timestamp(0)
-  users              Users     @relation(fields: [cliente_id], references: [cliente_id], onDelete: NoAction, onUpdate: NoAction, map: "cliente_id")
+  id          Int       @id @default(autoincrement())
+  cliente_id  Int
+  freezer_id  Int
+  temp_padrao Int
+  temp_min    Int
+  temp_max    Int
+  porta_tempo Int
+  createdAt   DateTime? @default(now()) @db.Timestamp(0)
+  updatedAt   DateTime? @default(now()) @db.Timestamp(0)
+  users       Users     @relation(fields: [cliente_id], references: [cliente_id], onDelete: NoAction, onUpdate: NoAction, map: "cliente_id")
 
   @@index([cliente_id], map: "cliente_id_idx")
   @@map("configfreezer")
@@ -43,4 +43,21 @@ model Users {
   configfreezer ConfigFreezer[]
 
   @@map("users")
+}
+
+model LogsFreezer {
+  id           Int       @id @default(autoincrement())
+  cliente_id   Int
+  freezer_id   Int
+  temp_atual   Decimal   @db.Decimal(10, 0)
+  temp_padrao  Decimal   @db.Decimal(10, 0)
+  temp_min     Int
+  temp_max     Int
+  porta_tempo  Decimal   @db.Decimal(10, 0)
+  porta_status String    @db.VarChar(45)
+  Erro         String?   @default("none") @db.VarChar(45)
+  Dia          String?   @default(dbgenerated("(date_format(curdate(),_utf8mb4\\'%d/%m/%Y\\'))")) @db.VarChar(10)
+  Hora         DateTime? @default(dbgenerated("(curtime())")) @db.Time(0)
+
+  @@map("logsfreezer")
 }

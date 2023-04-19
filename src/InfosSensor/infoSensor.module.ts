@@ -9,5 +9,4 @@ import { InfoSensorPrismaModule } from 'src/InfosSensor/InfoSensorPrisma/infoSen
     providers: [InfoSensorService],
     exports: [InfoSensorService],
 })
-
 export class InfoSensorModule {}
