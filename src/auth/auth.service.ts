@@ -3,12 +3,10 @@ import { JwtService } from '@nestjs/jwt';
 import { Users } from "@prisma/client";
 import { UsersPrismaService } from "src/Users/UsersPrisma/users.prisma.service";
 import { UsersService } from "src/Users/users.service";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-
-  private issuer = 'login';
-  private audience: 'users';
 
   constructor(
     private readonly jwtService: JwtService,
@@ -16,25 +14,25 @@ export class AuthService {
     private readonly usersService: UsersService,
   ) {}
 
-  async createToken(user: Users) {
+  createToken(user: Users) {
     return {
       accessToken: this.jwtService.sign({
         email: user.email,
       }, {
         expiresIn: "1 day",
         subject: String(user.cliente_id),
-        audience: this.audience,
-        issuer: this.issuer,
+        audience: 'users',
+        issuer: 'login',
       })
     }
   }
 
-  async checkToken(token: string) {
+  checkToken(token: string) {
 
     try {
-      const authVerified =  await this.jwtService.verify(token, {
-        audience: this.audience,
-        issuer: this.issuer,
+      const authVerified = this.jwtService.verify(token, {
+        audience: 'users',
+        issuer: 'login',
       }
       )
       return authVerified;
@@ -43,9 +41,9 @@ export class AuthService {
     }
   }
 
-  async isValidToken(token: string) {
+  isValidToken(token: string) {
     try {
-      await this.checkToken(token);
+      this.checkToken(token);
       return true;
     } catch (err) {
       return false;
@@ -55,12 +53,15 @@ export class AuthService {
   async login(email: string, password: string) {
     const userLogin = await this.prisma.users.findFirst({
       where: {
-        email, 
-        password
+        email
       }
     });
 
     if (!userLogin) {
+      throw new UnauthorizedException('E-mail e/ou senha inválido(s)');
+    }
+
+    if (await bcrypt.compare(password, userLogin.password)) {
       throw new UnauthorizedException('E-mail e/ou senha inválido(s)');
     }
 

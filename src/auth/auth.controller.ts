@@ -1,10 +1,12 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, Headers, UseGuards, Req } from "@nestjs/common";
 import { PostAuthLoginDTO } from "./authDTO/post-loginDTO";
 import { PostAuthRegisterDTO } from "./authDTO/post-registerDTO";
 import { PostAuthForgetDTO } from "./authDTO/post-forgetDTO";
 import { PostAuthResetDTO } from "./authDTO/post-resetDTO";
 import { UsersService } from "src/Users/users.service";
 import { AuthService } from "./auth.service";
+import { AuthGuard } from "src/guards/auth.guard";
+import { User } from "src/decorators/user.decorator";
 
 @Controller('auth')
 export class AuthController {
@@ -31,5 +33,11 @@ export class AuthController {
   @Post('reset')
   async reset(@Body() { password, token }: PostAuthResetDTO) {
     return this.authService.reset(password, token);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('user')
+  async me(@User('cliente_id') user) {
+    return { user }
   }
 }

@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 
 @Module({
   imports: [JwtModule.register({
-    secret: "@CLPsiteBANCOdeDADOS"
+    secret: process.env.JWT_SECRET
   }),
   UsersModule,
   UsersPrismaModule,
