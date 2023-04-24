@@ -63,4 +63,15 @@ export class LogsFreezerService {
       },
     });
   }
+
+  async getByFreezerId(id: number, freezerId: number) {
+    const allFrezzers = await this.prisma.logsFreezer.findMany({
+      where: {
+        cliente_id: id,
+        freezer_id: freezerId,
+      }
+    });
+    const lastFreezer = allFrezzers[allFrezzers.length - 1];
+    return lastFreezer;
+  }
 }

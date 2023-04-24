@@ -21,4 +21,11 @@ export class LogsFreezerController {
     const clienteId = Number(id);
     return this.logsFreezerService.getByCliente(clienteId);
   }
+
+  @Get(':id/:freezer')
+  async getByFreezer(@Param('id') id: number, @Param('freezer') freezer_id: number) {
+    const clienteId = Number(id);
+    const freezerId = Number(freezer_id);
+    return this.logsFreezerService.getByFreezerId(clienteId, freezerId);
+  }
 }
