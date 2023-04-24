@@ -1,7 +1,7 @@
-import { Module } from "@nestjs/common";
-import { ConfigFreezerPrismaModule } from "./configFreezerPrisma/configFreezer.prisma.module";
-import { ConfigFreezerController } from "./configFreezer.controller";
-import { ConfigFreezerService } from "./configFreezer.service";
+import { Module } from '@nestjs/common';
+import { ConfigFreezerPrismaModule } from './configFreezerPrisma/configFreezer.prisma.module';
+import { ConfigFreezerController } from './configFreezer.controller';
+import { ConfigFreezerService } from './configFreezer.service';
 
 @Module({
   imports: [ConfigFreezerPrismaModule],

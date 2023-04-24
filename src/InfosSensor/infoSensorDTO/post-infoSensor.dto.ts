@@ -1,7 +1,6 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber, IsString } from 'class-validator';
 
 export class PostInfoSensor {
-
   @IsNumber()
   cliente_id: number;
 
@@ -13,5 +12,4 @@ export class PostInfoSensor {
 
   @IsString()
   status_porta: string;
-
 }

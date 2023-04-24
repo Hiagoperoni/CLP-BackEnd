@@ -1,16 +1,16 @@
-import { Body, Controller, Post, Headers, UseGuards, Req } from "@nestjs/common";
-import { PostAuthLoginDTO } from "./authDTO/post-loginDTO";
-import { PostAuthRegisterDTO } from "./authDTO/post-registerDTO";
-import { PostAuthForgetDTO } from "./authDTO/post-forgetDTO";
-import { PostAuthResetDTO } from "./authDTO/post-resetDTO";
-import { UsersService } from "src/Users/users.service";
-import { AuthService } from "./auth.service";
-import { AuthGuard } from "src/guards/auth.guard";
-import { User } from "src/decorators/user.decorator";
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { PostAuthLoginDTO } from './authDTO/post-loginDTO';
+import { PostAuthRegisterDTO } from './authDTO/post-registerDTO';
+import { PostAuthForgetDTO } from './authDTO/post-forgetDTO';
+import { PostAuthResetDTO } from './authDTO/post-resetDTO';
+import { UsersService } from 'src/Users/users.service';
+import { AuthService } from './auth.service';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { User } from 'src/decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {
-  constructor (
+  constructor(
     private readonly userService: UsersService,
     private readonly authService: AuthService,
   ) {}
@@ -38,6 +38,6 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Post('user')
   async me(@User('cliente_id') user) {
-    return { user }
+    return { user };
   }
 }

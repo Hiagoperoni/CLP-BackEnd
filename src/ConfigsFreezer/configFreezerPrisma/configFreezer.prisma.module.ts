@@ -1,8 +1,8 @@
-import { Module } from "@nestjs/common";
-import { ConfigFreezerPrismaService } from "./configFreezer.prisma.service";
+import { Module } from '@nestjs/common';
+import { ConfigFreezerPrismaService } from './configFreezer.prisma.service';
 
 @Module({
-    providers: [ConfigFreezerPrismaService],
-    exports: [ConfigFreezerPrismaService],
+  providers: [ConfigFreezerPrismaService],
+  exports: [ConfigFreezerPrismaService],
 })
 export class ConfigFreezerPrismaModule {}

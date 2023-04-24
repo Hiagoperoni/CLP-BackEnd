@@ -3,4 +3,3 @@ export default interface UsersWhereInput {
   freezer_id?: number;
   cliente_id?: number;
 }
-  

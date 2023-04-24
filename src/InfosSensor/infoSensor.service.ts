@@ -1,13 +1,17 @@
-import { Injectable } from "@nestjs/common";
-import { PostInfoSensor } from "./infoSensorDTO/post-infoSensor.dto";
-import { InfoSensorPrismaService } from "src/InfosSensor/InfoSensorPrisma/infoSensor.prisma.service";
+import { Injectable } from '@nestjs/common';
+import { PostInfoSensor } from './infoSensorDTO/post-infoSensor.dto';
+import { InfoSensorPrismaService } from 'src/InfosSensor/InfoSensorPrisma/infoSensor.prisma.service';
 
 @Injectable()
 export class InfoSensorService {
-
   constructor(private readonly prisma: InfoSensorPrismaService) {}
 
-  async postData({cliente_id, freezer_id, status_porta, temp_atual}: PostInfoSensor) {
+  async postData({
+    cliente_id,
+    freezer_id,
+    status_porta,
+    temp_atual,
+  }: PostInfoSensor) {
     return this.prisma.freezerApi.create({
       data: {
         cliente_id,
@@ -25,8 +29,8 @@ export class InfoSensorService {
   async getById(id: number) {
     return this.prisma.freezerApi.findMany({
       where: {
-        cliente_id: Number(id)
-      }
+        cliente_id: Number(id),
+      },
     });
   }
 }

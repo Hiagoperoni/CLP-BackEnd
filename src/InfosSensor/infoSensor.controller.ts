@@ -4,7 +4,6 @@ import { InfoSensorService } from './infoSensor.service';
 
 @Controller('freezer')
 export class InfoSensorController {
-
   constructor(private readonly infoSensorService: InfoSensorService) {}
 
   @Get()
@@ -16,7 +15,7 @@ export class InfoSensorController {
   async getById(@Param('id') id) {
     return this.infoSensorService.getById(id);
   }
-  
+
   @Post()
   async postData(@Body() data: PostInfoSensor) {
     return this.infoSensorService.postData(data);

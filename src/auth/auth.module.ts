@@ -6,12 +6,13 @@ import { UsersPrismaModule } from 'src/Users/UsersPrisma/users.prisma.module';
 import { AuthService } from './auth.service';
 
 @Module({
-  imports: [JwtModule.register({
-    secret: process.env.JWT_SECRET
-  }),
-  UsersModule,
-  UsersPrismaModule,
-],
+  imports: [
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+    }),
+    UsersModule,
+    UsersPrismaModule,
+  ],
   controllers: [AuthController],
   providers: [AuthService],
 })
