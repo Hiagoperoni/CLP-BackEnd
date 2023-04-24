@@ -56,8 +56,9 @@ model LogsFreezer {
   porta_tempo  Decimal   @db.Decimal(10, 0)
   porta_status String    @db.VarChar(45)
   Erro         String?   @default("none") @db.VarChar(45)
-  Dia          String?   @default(dbgenerated("(date_format(curdate(),_utf8mb4\\'%d/%m/%Y\\'))")) @db.VarChar(10)
-  Hora         DateTime? @default(dbgenerated("(curtime())")) @db.Time(0)
+  createdAt   DateTime? @default(now()) @db.Timestamp(0)
+  // Dia          String?   @default(dbgenerated("(date_format(curdate(),_utf8mb4\\'%d/%m/%Y\\'))")) @db.VarChar(10)
+  // Hora         DateTime? @default(dbgenerated("(curtime())")) @db.Time(0)
 
   @@map("logsfreezer")
 }
