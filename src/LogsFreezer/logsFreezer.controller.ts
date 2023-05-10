@@ -7,14 +7,9 @@ export class LogsFreezerController {
   constructor(private readonly logsFreezerService: LogsFreezerService) {}
 
   @Post()
-  async postData(@Body() data: PostLogsFreezer) {
-    return this.logsFreezerService.postData(data);
+  async postData(@Body() { num_cliente, freezer_id, porta_status, temp_atual }: PostLogsFreezer) {
+    return this.logsFreezerService.postData({ num_cliente, freezer_id, porta_status, temp_atual });
   }
-
-  //  @Get()
-  //  async getAll() {
-  //    return this.logsFreezerService.getAll();
-  //  }
 
   @Get(':id')
   async getByCliente(@Param('id') id: number) {

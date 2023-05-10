@@ -3,6 +3,7 @@ import { ConfigFreezerPrismaService } from 'src/ConfigsFreezer/configFreezerPris
 import { PatchConfigFreezerDTO } from './configFreezerDTO/patch-configFreezer.dto';
 import ConfigFreezerWhereUniqueInput from './configFreezerDTO/typesFreezer';
 import { PostConfigFreezerDTO } from './configFreezerDTO/post-configFreezer.dto';
+import ConfigFreezerCreateInput from './configFreezerDTO/ConfigFreezerCreateInput';
 
 @Injectable()
 export class ConfigFreezerService {
@@ -10,17 +11,26 @@ export class ConfigFreezerService {
 
   async getAll(clienteId: number) {
     const where: ConfigFreezerWhereUniqueInput = {
-      cliente_id: Number(clienteId),
+      num_cliente: Number(clienteId),
     };
     return this.prisma.configFreezer.findMany({ where });
   }
 
+  async getById(clienteId: number, freezerId: number) {
+    const where = {
+      num_cliente: clienteId,
+      freezer_id: freezerId
+    };
+    const allConfigsById = await this.prisma.configFreezer.findMany({ where });
+    return allConfigsById[allConfigsById.length - 1];
+  }
+
   async patchData(data: PatchConfigFreezerDTO) {
     const where: ConfigFreezerWhereUniqueInput = {
-      id: Number(data.freezer_id),
+      num_cliente: Number(data.num_cliente),
+      freezer_id: Number(data.freezer_id),
     };
     const updateData = {
-      cliente_id: data.cliente_id,
       temp_padrao: data.temp_padrao,
       temp_margem_frio: data.temp_margem_frio,
       temp_margem_quente: data.temp_margem_quente,
@@ -32,24 +42,24 @@ export class ConfigFreezerService {
     });
   }
 
+  
   async postData({
-    cliente_id,
+    num_cliente,
     freezer_id,
     porta_tempo,
     temp_min,
     temp_max,
     temp_padrao,
   }: PostConfigFreezerDTO) {
-    const data = {
-      data: {
-        cliente_id,
-        freezer_id,
-        porta_tempo,
-        temp_min,
-        temp_max,
-        temp_padrao,
-      },
+    const data: ConfigFreezerCreateInput = {
+      num_cliente,
+      freezer_id,
+      temp_padrao,
+      temp_min,
+      temp_max,
+      porta_tempo,
     };
-    return this.prisma.configFreezer.create(data);
+    return this.prisma.configFreezer.create({ data });
   }
+  
 }

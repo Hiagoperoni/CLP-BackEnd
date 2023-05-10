@@ -2,7 +2,7 @@ import { IsNumber, IsString } from 'class-validator';
 
 export class PostLogsFreezer {
   @IsNumber()
-  cliente_id: number;
+  num_cliente: number;
 
   @IsNumber()
   freezer_id: number;
@@ -11,5 +11,5 @@ export class PostLogsFreezer {
   temp_atual: number;
 
   @IsString()
-  status_porta: string;
+  porta_status: string;
 }

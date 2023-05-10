@@ -65,15 +65,22 @@ export class AuthService {
       throw new UnauthorizedException('E-mail e/ou senha inválido(s)');
     }
 
-    if (await bcrypt.compare(password, userLogin.password)) {
+    const authorized = await bcrypt.compare(password, userLogin.password)
+    
+    if (!authorized) {
       throw new UnauthorizedException('E-mail e/ou senha inválido(s)');
     }
 
-    return this.createToken(userLogin);
+    const response = {
+      userId: userLogin.cliente_id,
+      token:  this.createToken(userLogin),
+    }
+
+    return response;
   }
 
-  async register(email: string, password: string) {
-    const user = await this.usersService.createClient({ email, password });
+  async register(email: string, password: string, num_cliente: number, qnt_freezers: number) {
+    const user = await this.usersService.createClient({ email, password, num_cliente, qnt_freezers });
 
     return this.createToken(user);
   }

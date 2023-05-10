@@ -6,18 +6,47 @@ import { PostLogsFreezer } from './LogsFreezerDTO/post-LogsFreezer';
 export class LogsFreezerService {
   constructor(private readonly prisma: LogsFreezerPrismaService) {}
 
-  async postData({
-    cliente_id,
-    freezer_id,
-    status_porta,
-    temp_atual,
-  }: PostLogsFreezer) {
+  async postData({ num_cliente, freezer_id, porta_status, temp_atual }: PostLogsFreezer) {
     const configFreezer = await this.prisma.configFreezer.findMany({
       where: {
-        cliente_id: cliente_id,
+        num_cliente: num_cliente,
         freezer_id: freezer_id,
       },
     });
+    if (porta_status === "Aberta") {
+      const errorReported = `Porta aberta por mais de [${configFreezer[0].porta_tempo}s]`;
+      const log1 = await this.prisma.logsFreezer.create({
+        data: {
+          num_cliente,
+          freezer_id,
+          temp_atual,
+          temp_padrao: configFreezer[0].temp_padrao,
+          temp_min: configFreezer[0].temp_min,
+          temp_max: configFreezer[0].temp_max,
+          porta_tempo: configFreezer[0].porta_tempo,
+          porta_status: porta_status,
+          Erro: 'none',
+        },
+      });
+      setTimeout(async () => {
+        const lastLogById = await this.getByFreezerId(num_cliente, freezer_id);
+        if (log1.porta_status === lastLogById.porta_status) {
+          return this.prisma.logsFreezer.create({
+            data: {
+              num_cliente,
+              freezer_id,
+              temp_atual,
+              temp_padrao: configFreezer[0].temp_padrao,
+              temp_min: configFreezer[0].temp_min,
+              temp_max: configFreezer[0].temp_max,
+              porta_tempo: configFreezer[0].porta_tempo,
+              porta_status: porta_status,
+              Erro: errorReported,
+            },
+          });
+        }
+      }, (1000 * configFreezer[0].porta_tempo));
+    }
     const tempFrio = Number(configFreezer[0].temp_min);
     const tempQuente = Number(configFreezer[0].temp_max);
     const tempAtual = Number(temp_atual);
@@ -25,28 +54,28 @@ export class LogsFreezerService {
       const errorReported = `Temperatura fora do permitido [${temp_atual}ºC]`;
       return this.prisma.logsFreezer.create({
         data: {
-          cliente_id,
+          num_cliente,
           freezer_id,
           temp_atual,
           temp_padrao: configFreezer[0].temp_padrao,
           temp_min: configFreezer[0].temp_min,
           temp_max: configFreezer[0].temp_max,
           porta_tempo: configFreezer[0].porta_tempo,
-          porta_status: status_porta,
+          porta_status: porta_status,
           Erro: errorReported,
         },
       });
     }
     return this.prisma.logsFreezer.create({
       data: {
-        cliente_id,
+        num_cliente,
         freezer_id,
         temp_atual,
         temp_padrao: configFreezer[0].temp_padrao,
         temp_min: configFreezer[0].temp_min,
         temp_max: configFreezer[0].temp_max,
         porta_tempo: configFreezer[0].porta_tempo,
-        porta_status: status_porta,
+        porta_status: porta_status,
         Erro: 'none',
       },
     });
@@ -59,7 +88,7 @@ export class LogsFreezerService {
   async getByCliente(id: number) {
     return this.prisma.logsFreezer.findMany({
       where: {
-        cliente_id: id,
+        num_cliente: id,
       },
     });
   }
@@ -67,11 +96,12 @@ export class LogsFreezerService {
   async getByFreezerId(id: number, freezerId: number) {
     const allFrezzers = await this.prisma.logsFreezer.findMany({
       where: {
-        cliente_id: id,
+        num_cliente: id,
         freezer_id: freezerId,
       }
     });
     const lastFreezer = allFrezzers[allFrezzers.length - 1];
     return lastFreezer;
   }
+
 }

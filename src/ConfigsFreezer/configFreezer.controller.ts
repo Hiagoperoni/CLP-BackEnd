@@ -12,13 +12,32 @@ export class ConfigFreezerController {
     return this.configFreezerService.getAll(id);
   }
 
+  @Get(':id/:freezerId')
+  async getFreezerById(@Param('id') id: number, @Param('freezerId') freezerId: number) {
+    return this.configFreezerService.getById(Number(id), Number(freezerId));
+  }
+
   @Patch()
   async updateConfigFreezer(@Body() data: PatchConfigFreezerDTO) {
     return this.configFreezerService.patchData(data);
   }
 
   @Post()
-  async postData(@Body() data: PostConfigFreezerDTO) {
-    return this.configFreezerService.postData(data);
+  async postData(@Body(){
+    num_cliente,
+    freezer_id,
+    porta_tempo,
+    temp_min,
+    temp_max,
+    temp_padrao,
+  }: PostConfigFreezerDTO) {
+    return this.configFreezerService.postData({
+      num_cliente,
+      freezer_id,
+      porta_tempo,
+      temp_min,
+      temp_max,
+      temp_padrao,
+    });
   }
 }
